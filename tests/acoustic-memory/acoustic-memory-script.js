@@ -158,7 +158,7 @@ function animateBars() {
   });
   barNone.forEach((barnone) => {
     // Véletlen idő 100 és 300 ms között
-    const randomTime = Math.random() * 100 + 100; // 100 - 300 ms közötti véletlen idő
+    const randomTime = Math.random() * 100 + 300; // 100 - 300 ms közötti véletlen idő
 
     // Hozzáadjuk a height100 osztályt
     barnone.classList.add("height50");
