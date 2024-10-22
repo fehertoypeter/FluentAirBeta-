@@ -178,39 +178,50 @@ function playSequenceSounds(sequence) {
     bar.classList.add("voice");
   });
 
-  let currentIndex = 0;
-
-  function playNextSound() {
-    if (currentIndex < sequence.length) {
-      const number = sequence[currentIndex];
+  // Hangok betöltése egy tömbbe
+  const audioFiles = sequence.map((number) => {
+    return new Promise((resolve) => {
       const audio = new Audio("tests/acoustic-memory/audio/" + number + ".mp3");
-      audio.play();
+      audio.oncanplaythrough = () => resolve(audio); // Ha betöltődött a fájl, resolve-oljuk a Promise-t
+    });
+  });
 
-      audio.onended = function () {
-        currentIndex++;
-        playNextSound();
-      };
-    } else {
-      // Amikor a hangok lejátszása befejeződött, levesszük a voice osztályt
-      bars.forEach((bar) => {
-        bar.classList.remove("voice");
-      });
+  // Amikor minden hang betöltődött, elindítjuk a lejátszást
+  Promise.all(audioFiles).then((audioElements) => {
+    let currentIndex = 0;
 
-      // Animációs intervallum leállítása
-      clearInterval(animationInterval);
+    function playNextSound() {
+      if (currentIndex < audioElements.length) {
+        const audio = audioElements[currentIndex];
+        audio.play();
 
-      // Eltávolítjuk a height100 osztályt véglegesen
-      bars.forEach((bar) => {
-        bar.classList.remove("height100");
-      });
+        audio.onended = function () {
+          currentIndex++;
+          playNextSound();
+        };
+      } else {
+        // Amikor a hangok lejátszása befejeződött, levesszük a voice osztályt
+        bars.forEach((bar) => {
+          bar.classList.remove("voice");
+        });
+
+        // Animációs intervallum leállítása
+        clearInterval(animationInterval);
+
+        // Eltávolítjuk a height100 osztályt véglegesen
+        bars.forEach((bar) => {
+          bar.classList.remove("height100");
+        });
+      }
     }
-  }
 
-  playNextSound(); // Elindítjuk a hangfájlok lejátszását
+    playNextSound(); // Elindítjuk a hangfájlok lejátszását
 
-  // Animációs intervallum indítása
-  animationInterval = setInterval(animateBars, 300); // 300 ms-enként animál
+    // Animációs intervallum indítása
+    animationInterval = setInterval(animateBars, 300); // 300 ms-enként animál
+  });
 }
+
 
 //Numeric Pad megjelenítése
 function toggleInputButtonsVisibility() {
