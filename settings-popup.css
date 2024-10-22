@@ -1,0 +1,121 @@
+.popupShow {
+  display: flex;
+}
+.popupHidden {
+  display: none;
+}
+.mt30 {
+  margin-top: 20px;
+}
+
+.message-popup {
+  padding: 20px 30px 20px 30px;
+  background-color: #e83b51;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  z-index: 9999;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  transition: all 0.4s ease;
+  justify-content: flex-start;
+}
+.message-popup.popupHidden {
+  right: -200px;
+  transition: all 0.4s ease;
+}
+
+.settings-popup {
+  justify-content: center;
+  align-items: center;
+  background-color: #9fbada96;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 600;
+}
+.settings-popup h2 {
+  margin-bottom: 20px;
+}
+.settings-container {
+  width: 600px;
+  height: 400px;
+  background-color: #ebf4ff;
+  border-radius: 20px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 601;
+}
+.settings-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+.settings-row.modified {
+  justify-content: flex-start;
+}
+.settings-popup h3 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 140%;
+  margin-bottom: 24px;
+}
+.settings-popup .description.modified h3 {
+  margin-bottom: 5px;
+}
+
+.mode p {
+  font-size: var(--font-size-small);
+  margin: 0px !important;
+}
+.inputBox {
+  position: relative;
+  width: 100px;
+}
+.inputBox input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ebf4ff;
+  border-radius: 5px;
+  outline: none;
+  color: black;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+.inputBox span {
+  position: absolute;
+  left: 0;
+  padding: 13px;
+  pointer-events: none;
+  font-size: var(--font-size-small);
+  color: black;
+  transition: 0.2s;
+}
+.inputBox input:valid ~ span,
+.inputBox input:focus ~ span {
+  color: black;
+  transform: translateX(10px) translateY(-6px);
+  font-size: 0.65rem;
+  padding: 0 10px;
+  background: #ebf4ff;
+  border-left: 1px solid #ffcd57;
+  border-right: 1px solid #ffcd57;
+  letter-spacing: 0.2em;
+}
+.inputBox input:valid,
+.inputBox input:focus {
+  border: 1px solid #ffcd57;
+}
+.invalid {
+  border: 1px solid black !important;
+  background-color: #e83b51;
+}

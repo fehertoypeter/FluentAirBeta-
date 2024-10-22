@@ -1,0 +1,226 @@
+#acoustic-memory-container {
+  position: relative; /* A gomb pozícionálásához szükséges */
+  max-width: 450px;
+  border: 1px solid #c3c3c3;
+  border-radius: 20px;
+  padding: 30px 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.open-close-Btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 9;
+}
+#settings {
+  display: none; /* Alapértelmezett rejtés */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  z-index: 1; /* Biztosítja, hogy felül legyen */
+}
+
+.settings-open #settings {
+  display: block;
+}
+
+.answerNumberInput {
+  display: inline-block;
+  width: 90%;
+  height: 50px;
+  margin: 30px 15px 15px 15px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  line-height: 1.75;
+  text-align: center;
+  position: relative;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.015),
+    0px 3px 10px 0px rgba(0, 30, 26, 0.04);
+  z.index: 5;
+}
+.answerNumberInput {
+  -moz-appearance: textfield; /* Firefox */
+}
+.answerNumberInput::-webkit-inner-spin-button,
+.answerNumberInput::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Chrome, Safari, Edge */
+}
+.feedback-box {
+  display: inline-block;
+  width: 80%;
+  height: 30px;
+  position: absolute;
+  margin: 0px;
+  margin-top: 30px;
+  left: 10%;
+  z-index: 0;
+  border: 1px solid #ccc;
+  text-align: center;
+  border-radius: 10px 10px 0px 0px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+.feedback-box.open {
+  margin-top: 2px;
+}
+.feedback-box p {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.75;
+}
+#input-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 20px;
+  justify-content: center;
+  width: 90%;
+  margin: 0 auto;
+  justify-items: center;
+}
+.wide-button {
+  grid-column: span 2;
+  width: 100% !important;
+}
+.input-button.clear-button {
+  font-weight: 800;
+  background-color: #a1b1c0;
+}
+
+.input-button {
+  background: hsl(210, 25%, 95%);
+  border: none;
+  font-size: 1.2rem;
+  line-height: 2;
+  width: 100%;
+  height: 60px;
+  border-radius: 30px;
+  color: #223968;
+  display: flex;
+  font-weight: 500;
+  justify-content: center; /* Tartalom vízszintes középre igazítása */
+  align-items: center; /* Tartalom függőleges középre igazítása */
+  box-shadow: 0px 3px 6px 0px rgb(0 0 0 / 13%);
+}
+
+#currentNumber {
+  display: none;
+}
+
+#gameContainer {
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  max-width: 22rem;
+  overflow: hidden;
+  color: #223968;
+  background: #c1dfef;
+  margin: 2em auto;
+  padding: 20px; /* Belső margó hozzáadva a tartalomhoz */
+}
+
+#check {
+  background: #cdda32;
+}
+
+.num-button {
+  border: none;
+  font-size: 1rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  color: #223968;
+  background: white;
+  display: flex;
+  justify-content: center; /* Tartalom vízszintes középre igazítása */
+  align-items: center; /* Tartalom függőleges középre igazítása */
+  margin: 3px;
+}
+
+.num-button.selected {
+  background: rgb(205, 218, 50);
+  color: #223968;
+  border: 2px solid #223968;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  isplay: flex;
+  justify-content: center; /* Tartalom vízszintes középre igazítása */
+  align-items: center; /* Tartalom függőleges középre igazítása */
+  margin: 3px;
+}
+
+.start-check-button {
+  border: none;
+  font-size: 1.2rem;
+  width: 300px;
+  border-radius: 15px;
+  color: #223968;
+  background: rgb(205, 218, 50);
+  margin-top: 20px;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  padding: 15px 0px;
+}
+
+#numButtons {
+  margin-left: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.bar-container {
+  display: flex;
+  justify-content: center;
+  height: 40px;
+}
+
+#bars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bar {
+  background: #52467b;
+  bottom: 1px;
+  height: 5px;
+  width: 5px;
+  margin: 0px 4px;
+  border-radius: 5px;
+  transition: height 0.3s ease, opacity 0.5s ease; /* Átmenet beállítások */
+}
+.bar-none {
+  background: #52467b;
+  bottom: 1px;
+  height: 5px;
+  width: 5px;
+  margin: 0px 4px;
+  border-radius: 5px;
+  transition: height 0.3s ease, opacity 0.5s ease; /* Átmenet beállítások */
+}
+
+.height100 {
+  height: 100%; /* Magasság, amikor az osztály aktív */
+}
+.height50 {
+  height: 50%; /* Magasság, amikor az osztály aktív */
+}

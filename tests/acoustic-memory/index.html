@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Reverse Readback Memory</title>
+  </head>
+  <body>
+    <div id="gameContainer">
+      <h1>Reverse Memory Span</h1>
+
+      <div id="currentNumber" class="number-box"></div>
+
+      <div id="settings">
+        <label>Digits:</label>
+        <div id="numButtons">
+          <button class="num-button" data-value="3">3</button>
+          <button class="num-button" data-value="4">4</button>
+          <button class="num-button" data-value="5">5</button>
+          <button class="num-button" data-value="6">6</button>
+          <button class="num-button" data-value="7">7</button>
+          <button class="num-button" data-value="8">8</button>
+          <button class="num-button" data-value="9">9</button>
+          <button class="num-button" data-value="10">10</button>
+          <button class="num-button" data-value="11">11</button>
+          <button class="num-button" data-value="12">12</button>
+        </div>
+
+        <label>Order:</label>
+        <div id="orderButtons">
+          <button class="order-button selected" data-value="normal">
+            Normal
+          </button>
+          <button class="order-button" data-value="reverse">Reverse</button>
+        </div>
+      </div>
+
+      <div>
+        <div id="inputNumbers" class="tip-box"></div>
+      </div>
+
+      <div id="input-buttons">
+        <button class="input-button" data-digit="1">1</button>
+        <button class="input-button" data-digit="2">2</button>
+        <button class="input-button" data-digit="3">3</button>
+        <button class="input-button" data-digit="4">4</button>
+        <button class="input-button" data-digit="5">5</button>
+        <button class="input-button" data-digit="6">6</button>
+        <button class="input-button" data-digit="7">7</button>
+        <button class="input-button" data-digit="8">8</button>
+        <button class="input-button" data-digit="9">9</button>
+        <button id="clearInput" class="input-button">
+          <i class="fa fa-delete-left"></i>
+        </button>
+        <button class="input-button" data-digit="0">0</button>
+        <button id="check" class="input-button">
+          <i class="fa fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <button id="startGame">New Round</button>
+      <div id="feedback"></div>
+    </div>
+
+    <script>
+      let sequence = [];
+      let inputSequence = [];
+      let numDigits = 4;
+      let currentIndex = 0;
+      let gameStarted = false;
+      let isReverseOrder = false;
+
+      const inputNumbersContainer = document.getElementById("inputNumbers");
+      const feedback = document.getElementById("feedback");
+      const numButtons = document.querySelectorAll(".num-button");
+      const orderButtons = document.querySelectorAll(".order-button");
+      const startGameButton = document.getElementById("startGame");
+      const checkButton = document.getElementById("check");
+      const inputButtons = document.querySelectorAll(".input-button");
+
+      numButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          numDigits = parseInt(button.getAttribute("data-value"));
+
+          // Távolítsuk el a kiválasztást a többi gombtól
+          numButtons.forEach((btn) => btn.classList.remove("selected"));
+
+          // Adjuk hozzá a kiválasztást az aktuális gombhoz
+          button.classList.add("selected");
+        });
+      });
+
+      orderButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const order = button.getAttribute("data-value");
+          isReverseOrder = order === "reverse";
+
+          // Távolítsuk el a kiválasztást a többi gombtól
+          orderButtons.forEach((btn) => btn.classList.remove("selected"));
+
+          // Adjuk hozzá a kiválasztást az aktuális gombhoz
+          button.classList.add("selected");
+        });
+      });
+
+      startGameButton.addEventListener("click", () => {
+        startGame();
+      });
+
+      checkButton.addEventListener("click", () => {
+        if (gameStarted) {
+          checkInputSequence();
+        }
+      });
+
+      inputButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (gameStarted) {
+            const digit = button.getAttribute("data-digit");
+            inputSequence.push(parseInt(digit));
+            updateInputNumbersDisplay();
+          }
+        });
+      });
+
+      function startGame() {
+        inputNumbersContainer.style.backgroundColor = "white";
+        sequence = generateRandomSequence(numDigits);
+        inputSequence = [];
+        currentIndex = 0;
+        updateInputNumbersDisplay();
+        feedback.textContent = "";
+        gameStarted = true;
+        playSequenceSounds(sequence);
+      }
+
+      function generateRandomSequence(length) {
+        const sequence = [];
+        for (let i = 0; i < length; i++) {
+          sequence.push(Math.floor(Math.random() * 10));
+        }
+        return sequence;
+      }
+
+      function updateInputNumbersDisplay() {
+        inputNumbersContainer.textContent = inputSequence
+          .filter((item) => !isNaN(item))
+          .join("");
+      }
+
+      function checkInputSequence() {
+        if (inputSequence.length !== sequence.length) {
+          displayResult(false);
+          return;
+        }
+
+        for (let i = 0; i < sequence.length; i++) {
+          const correctIndex = isReverseOrder ? sequence.length - 1 - i : i;
+          if (inputSequence[i] !== sequence[correctIndex]) {
+            displayResult(false);
+            return;
+          }
+        }
+
+        displayResult(true);
+      }
+
+      function displayResult(isCorrect) {
+        inputNumbersContainer.style.backgroundColor = isCorrect
+          ? "#CDDA32"
+          : "#FF0000";
+      }
+
+      function playSequenceSounds(sequence) {
+        let currentIndex = 0;
+
+        function playNextSound() {
+          if (currentIndex < sequence.length) {
+            const number = sequence[currentIndex];
+            const audio = new Audio(number + ".mp3");
+            audio.play();
+
+            audio.onended = function () {
+              currentIndex++;
+              playNextSound();
+            };
+          }
+        }
+
+        playNextSound();
+      }
+    </script>
+    <script
+      src="https://kit.fontawesome.com/6eef71e6fe.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
